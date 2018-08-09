@@ -20,7 +20,7 @@
         name   : 'layout',
         created: function ()
         {
-            console.log('layout');
+            console.log('HOME LAYOUT');
         },
         data   : function ()
         {

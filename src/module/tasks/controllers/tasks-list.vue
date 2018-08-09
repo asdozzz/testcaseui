@@ -32,14 +32,13 @@
                             <v-card-text :class="{opacity2:preloadFetch}">
                                 <v-data-table
                                         v-if="datacomponent=='table'"
-                                        v-bind:headers="headers"
-                                        v-bind:items="datatable.items"
-                                        v-bind:search="datatable.search"
-                                        v-bind:pagination.sync="datatable.pagination"
-                                        v-bind:total-items="datatable.totalItems"
-                                        v-bind:must-sort="true"
+                                        :headers="headers"
+                                        :items="datatable.items"
                                         :rows-per-page-items = "rowPerPageItems"
-                                        v-on:update:pagination="updatePagination($event)">
+                                        :total-items="datatable.totalItems"
+                                        :search="datatable.search"
+                                        :pagination.sync="datatable.pagination"
+                                        hide-actions>
                                     <template slot="items" slot-scope="props">
                                         <td>{{ props.item.id }}</td>
                                         <td>{{ props.item.subject }}</td>
@@ -60,6 +59,7 @@
                                         </v-alert>
                                     </template>
                                 </v-data-table>
+
                                 <v-data-iterator v-if="datacomponent=='iterator'"
                                         content-tag="v-layout"
                                         row wrap
@@ -67,7 +67,7 @@
                                         :rows-per-page-items = "rowPerPageItems"
                                         :total-items="datatable.totalItems"
                                         :pagination.sync="datatable.pagination"
-                                        v-on:update:pagination="updatePagination($event)">
+                                         hide-actions>
                                     <v-flex
                                             slot="item"
                                             slot-scope="props"
@@ -86,6 +86,9 @@
                                         </v-card>
                                     </v-flex>
                                 </v-data-iterator>
+                                <div class="text-xs-center pt-2">
+                                    <v-pagination v-model="datatable.pagination.page" :length="datatable.pages" v-on:input="updatePagination"></v-pagination>
+                                </div>
                             </v-card-text>
                         </v-card>
 
@@ -112,8 +115,7 @@
             var reqProjects = _this.$store.dispatch('Projects/ProjectsList/All');
             var reqStatuses = _this.$store.dispatch('Tasks/TasksStatuses/All');
 
-            Promise.all([reqProjects,reqStatuses]).then(value => {
-                console.log('Promise.all',value);
+            Promise.all([reqProjects,reqStatuses]).then(function(value){
                 _this.fetchTasks();
             });
         },
@@ -151,7 +153,7 @@
             statuses:function()
             {
                 return this.$store.getters['Tasks/TasksStatuses/getItems'];
-            },
+            }
 
         },
         methods: {
@@ -160,20 +162,19 @@
                 var collection =  this.$store.getters['Projects/ProjectsList/getCollection'];
 
                 var item = collection.getModelByPk(id);
-                console.log('item',item);
-                return item[prop];
+
+                return item?item[prop]:'';
             },
             getStatusById:function(id, prop)
             {
                 var collection =  this.$store.getters['Tasks/TasksStatuses/getCollection'];
 
                 var item = collection.getModelByPk(id);
-                console.log('item',item);
-                return item[prop];
+
+                return item?item[prop]:'';
             },
             updatePagination:function(paginator)
             {
-                console.log('paginator',paginator);
                 var _this = this;
                 _this.fetchTasks();
             },
@@ -202,7 +203,6 @@
             },
             editItem:function(task_id)
             {
-                console.log('asd',this.$router);
                 this.$router.push({ name: 'task.edit', params: { id: this.id ,task_id:task_id }});
             },
             removeItem:function(id)

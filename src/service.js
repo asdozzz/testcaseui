@@ -3,6 +3,7 @@
  */
 import UniversalService from './module/abstract/services/universal';
 import ProjectService from './module/projects/services/project';
+import TaskService from './module/tasks/services/task';
 import RequirementService from './module/requirements/services/requirement';
 
 class Services
@@ -28,6 +29,7 @@ class Services
 const map = {
     'requirements':RequirementService,
     'projects':ProjectService,
+    'tasks':TaskService,
     'universal':UniversalService
 };
 

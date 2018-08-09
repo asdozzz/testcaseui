@@ -41,7 +41,7 @@ function DatatableStore(store)
         setDatatable:function(state,obj)
         {
             state.collection = new DefaultCollection(obj.data);
-            state.datatable.totalItems = obj.recordsTotal;
+            state.datatable.totalItems = parseInt(obj.recordsTotal);
             state.datatable.pages = Math.ceil(state.datatable.totalItems/state.datatable.pagination.rowsPerPage);
         },
         Remove:function(state,id)
@@ -77,7 +77,7 @@ function DatatableStore(store)
             promise.then(
                 function(response)
                 {
-                    context.commit('setDatatable',response.data);
+                    context.commit('setDatatable',response.data.result);
                 }
             );
 
@@ -98,7 +98,7 @@ function DatatableStore(store)
             promise.then(
                 function(response)
                 {
-                    context.commit('setAll',response.data);
+                    context.commit('setAll',response.data.result);
                 }
             );
 

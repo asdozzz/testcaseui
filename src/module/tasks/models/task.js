@@ -2,6 +2,7 @@
  * Created by asd on 12.02.2018.
  */
 import aModel from '../../abstract/models/model.js';
+import TaskUsers from './task_users';
 
 export default class Task extends aModel
 {
@@ -15,7 +16,8 @@ export default class Task extends aModel
             tracker:null,
             priority:null,
             subject: '',
-            description: ''
+            description: '',
+            users:new TaskUsers()
         }
     }
 }

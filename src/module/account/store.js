@@ -26,7 +26,7 @@ export default {
 
             if (accountString != undefined && tokenExpires != undefined)
             {
-                if (Date.now() > parseInt(tokenExpires))
+                if (parseInt(Date.now()) > parseInt(tokenExpires))
                 {
                     window.localStorage.removeItem('accountObj');
                     window.localStorage.removeItem('tokenExpires');
@@ -41,6 +41,7 @@ export default {
             window.HTTP = axios.create({
                 baseURL: window.ENV['BASE_URL'],
                 headers: {
+                    Accept: 'application/json',
                     Authorization: 'Bearer '+state.account.access_token
                 }
             });
@@ -75,15 +76,17 @@ export default {
                 let data = response.data;
 
                 window.localStorage.setItem('accountObj',JSON.stringify(response.data));
-                window.localStorage.setItem('tokenExpires',data.expires_in+Date.now());
+                var tokenExpires = parseInt(data.expires_in)*1000+parseInt(Date.now());
+                console.log('tokenExpires',tokenExpires);
+                window.localStorage.setItem('tokenExpires',tokenExpires);
                 context.commit('Init');
             });
         },
         getUser:function(context)
         {
             return window.HTTP.get('/api/user').then((response) => {
-                context.commit('SET_USER',response.data);
                 console.log('user',response);
+                context.commit('SET_USER',response.data);
             });
         },
         Logout:function(context)

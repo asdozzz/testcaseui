@@ -8,6 +8,6 @@ export default class ProjectService extends UniversalService
     GetUsersById(id)
     {
         var _this = this;
-        return window.HTTP.post('/api/projects/'+id+'/users');
+        return window.HTTP.get('/api/projects/'+id+'/users');
     }
 }

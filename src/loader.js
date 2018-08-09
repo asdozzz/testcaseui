@@ -30,7 +30,7 @@ const config = {
     locale: 'ru'
 };
 
-Validator.addLocale(ru);
+Validator.localize('ru', ru);
 
 const dictionary = {
     ru: {
@@ -40,7 +40,7 @@ const dictionary = {
     }
 };
 
-Validator.updateDictionary(dictionary);
+Validator.localize('ru', dictionary.ru);
 
 Vue.use(VeeValidate, config);
 Vue.use(Toasted);

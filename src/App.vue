@@ -20,14 +20,15 @@
 
             <v-list dense class="pt-0" v-if="laydata.sidebar">
                 <v-divider></v-divider>
-                <v-list-tile ripple class="list__tile--link" v-for="item in laydata.sidebar.items" :key="item.route">
+                <v-list-tile v-for="item in laydata.sidebar.items" :key="item.route" :to="item.route">
                     <v-list-tile-action>
                         <v-icon>{{item.icon}}</v-icon>
                     </v-list-tile-action>
                     <v-list-tile-content>
-                        <router-link tag="v-list-tile-title" :to="item.route">{{item.label}}</router-link>
+                        <v-list-tile-title v-text="item.label"></v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
+
             </v-list>
         </v-navigation-drawer>
         <v-toolbar v-bind:class="laydata.color" dark fixed app>
