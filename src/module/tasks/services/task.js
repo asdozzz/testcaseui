@@ -3,7 +3,7 @@
  */
 import UniversalService from '../../abstract/services/universal';
 
-export default class ProjectService extends UniversalService
+export default class TaskService extends UniversalService
 {
     GetUsersById(id)
     {
